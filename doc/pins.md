@@ -1,0 +1,3 @@
+PINS
+  3.3V -> PA0, PA1, PA4, PA5, PB5
+  5V   -> PB9, PB8, PB15, PB14, PB13, PB12
