@@ -14,3 +14,12 @@ void system_init() {
   detection_setup();
 
 }
+
+void wait_for_rpi() {
+	pinMode(PA0, INPUT);
+
+	delay(4000);
+
+	while(digitalRead(PA0) == 1) 
+		delay(1);	
+}
