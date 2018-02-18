@@ -7,18 +7,29 @@
 
 int x = 1000;
 
-void setup() {
-	
-	wait_for_rpi();
-	
-	// system_init();
-	pinMode(PC13, OUTPUT);
+int nums[8] = {
+	1,2,3,4,5,6,7,8
+};
 
+void send_data() {
+	for(int i=0; i<8; i++) {
+		Serial2.print(nums[i]);
+	}
 }
 
+void setup() {
+	
+	pinMode(PC13, OUTPUT);
+	
+	system_init();
+
+	wait_for_rpi();
+	
+
+	
+}
 void loop() {
-	digitalWrite(PC13, HIGH);
-	delay(1000);
-	digitalWrite(PC13, LOW);
-	delay(1000);
+	send_data();
+	delay(500);
+	
 }
