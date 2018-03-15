@@ -1,4 +1,6 @@
 #include "timer.h"
+#include "system.h"
+#include "odometry.h"
 
 /*
  * Great help from: http://librambutan.readthedocs.io/en/latest/lang/api/hardwaretimer.html
@@ -19,7 +21,9 @@ static void sys_time_updater(void) {
 
   if((sys_time % 1) == 0) {
     // every 1ms
+    read_pi();
   }
+
 
   sys_time++;
 }

@@ -22,8 +22,8 @@ struct odometry_position position=
  *  Description: sends an unsigned char to odometry board via serial
  *  Parameter:   unsigned char val - the value we will send
  */
-static void odometry_send_command_print(uint8_t val) { Serial.print(val); }
-static void odometry_send_8bit(uint8_t val) { Serial.print(val); }
+static void odometry_send_command_print(char val) { Serial.print(val); }
+static void odometry_send_8bit(char val) { Serial.print(val); }
 
 /*
  *	Function: 	 static int odometry_get_command(void)

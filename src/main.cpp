@@ -1,19 +1,25 @@
 #include <Arduino.h>
 #include <HardwareSerial.h>
 #include "system.h"
+#include "odometry.h"
 
-char test[8];
 
-char snd[8] = {1,2,3,4,5,6,7,8};
+
 void setup() {
-	system_init();
 	
+	//Serial.begin(57600);
+	system_init();
+	//odometry_end_match();
 	wait_for_rpi();
+	
+	//Serial.begin(57600);
+	//Serial.print('K');
+	
+	//odometry_set_speed(100);
+
+	odometry_rotate_for(360, NULL);
 }
 
 void loop() {
-	
 	read_pi();
-
-
 }

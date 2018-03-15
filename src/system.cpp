@@ -17,24 +17,26 @@ void pi_com_setup() {
 void system_init() {
 
   	timer_setup();
-
-  	odometry_setup();
-  	servo_setup();
-  	detection_setup();
-	
+	delay(100);
 	pi_com_setup();
+	delay(100);
+  	odometry_setup();
+	delay(100);
+	// 	servo_setup();
+ //	detection_setup();
+	
+
 
 	pinMode(PC13, OUTPUT);
 }
+
 void wait_for_rpi() {
-	while(!execute_via_pi) {
-		read_pi();
-		digitalWrite(PC13, !digitalRead(PC13));
-		delay(50);
-	}
+	while(!execute_via_pi)
+		delay(10);
+}
 
-	digitalWrite(PC13, LOW);
-
+void serialEvent1() {
+	read_pi();
 }
 
 static void pi_write_array(char (*data)[8]) {
@@ -52,23 +54,22 @@ static void pi_read_array(char (*data)[8]) {
 	
 }
 
+
 void read_pi() {
 	char recv[8];
 	
 	if(Serial1.available() >= 8) {
 		pi_read_array(&recv);
-		delay(1);
 		
-		// switching
 		switch(recv[0]) {
 			case 's':
 				if(recv[1] == 'e') {
-					execute_via_pi = 1;	
+					execute_via_pi = 1;
+				} else if(recv[1] == 'm'){
+					odometry_end_match();
 				}
+				break;
 		}
-
-
-
 
 		pi_write_array(&recv);
 	}
