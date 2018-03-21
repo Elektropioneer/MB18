@@ -79,6 +79,15 @@ void odometry_set_position(int16_t x, int16_t y, int16_t angle) {
 
 }
 
+uint8_t odometry_ping(void) {
+	odometry_send_command_print(odometry_command_ping);
+	unsigned char confirm = odometry_get_command();
+	if(confirm == 'H')
+		return 1;
+	else
+		return 0;
+}
+
 /*
  *	Function: 	 void odometry_update_status(void)
  *  Description: updates the position struct with new data
@@ -222,6 +231,8 @@ void odometry_end_match(void) {
 	odometry_send_command_print(odometry_command_end_match);
 
 }
+
+
 
 /*
  *  Description: return all data found in the struct

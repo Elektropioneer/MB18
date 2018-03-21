@@ -33,8 +33,12 @@ enum odometry_states
 #define odometry_command_goto					 'G'
 #define odometry_command_stop					 'S'
 #define odometry_command_end_match		 'K'
+#define odometry_command_ping 'H'
+
 
 void odometry_setup();
+
+uint8_t odometry_ping(void);
 
 void odometry_set_position(int16_t x, int16_t y, int16_t angle);
 void odometry_update_status(void);

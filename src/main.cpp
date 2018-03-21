@@ -2,24 +2,17 @@
 #include <HardwareSerial.h>
 #include "system.h"
 #include "odometry.h"
-
-
+#include "detection.h"
 
 void setup() {
 	
-	//Serial.begin(57600);
 	system_init();
-	//odometry_end_match();
+	pinMode(PC13, OUTPUT);
+	
 	wait_for_rpi();
-	
-	//Serial.begin(57600);
-	//Serial.print('K');
-	
-	//odometry_set_speed(100);
-
-	odometry_rotate_for(360, NULL);
 }
 
 void loop() {
-	read_pi();
+	digitalWrite(PC13, detection_get_pin(CS_BC_PIN));
+	delay(100);
 }
