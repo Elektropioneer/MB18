@@ -6,6 +6,7 @@
 #include "servo.h"
 #include "odometry.h"
 #include "detection.h"
+#include "actuator.h"
 
 uint8_t execute_via_pi = 0;
 
@@ -31,6 +32,8 @@ void system_init() {
   	odometry_setup();
 	delay(100);
 	detection_setup();
+	delay(100);
+	actuator_setup();
 	delay(100);
 
 	pinMode(PC13, OUTPUT);
