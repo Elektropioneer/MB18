@@ -4,21 +4,28 @@
 void detection_setup_pin(uint8_t pin);
 uint8_t detection_get_pin(uint8_t pin);
 
+#define S1 PA8
+#define S2 PA11
+#define S3 PA12
+#define S4 PA15
+#define S5 PB3
+#define S6 PB4
+
 #define DETECTED     1
 #define NOT_DETECTED 0
 
-#define CS_FL_PIN PA8
+#define CS_FL_PIN S2
   #define CS_FL_DETECTED 1
-#define CS_FC_PIN PB3
+#define CS_FC_PIN 0
   #define CS_FC_DETECTED 1
-#define CS_FR_PIN PA11
+#define CS_FR_PIN S1
   #define CS_FR_DETECTED 1
 
-#define CS_BL_PIN PA12
+#define CS_BL_PIN S4
   #define CS_BL_DETECTED 1
-#define CS_BC_PIN PB4
+#define CS_BC_PIN S5
   #define CS_BC_DETECTED 1
-#define CS_BR_PIN PA15
+#define CS_BR_PIN S3
   #define CS_BR_DETECTED 1
 
 void detection_setup();

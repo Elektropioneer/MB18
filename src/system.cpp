@@ -35,7 +35,15 @@ void system_init() {
 	delay(100);
 	actuator_setup();
 	delay(100);
+	switch_setup();
+	delay(100);
+	/*servo_setup();
+	delay(100);
 
+	servo_three_a7(0); //right
+	delay(5);
+	servo_four_a6(0); // left
+*/
 	pinMode(PC13, OUTPUT);
 }
 

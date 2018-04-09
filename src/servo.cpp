@@ -43,4 +43,16 @@ static void servo_write(uint8_t pin, uint8_t angle) { pwmWrite(pin, map(angle, 0
 void servo_one_b1(uint8_t angle)   { servo_write(servo_first_pin,  angle); }
 void servo_two_b0(uint8_t angle)   { servo_write(servo_second_pin, angle); }
 void servo_three_a7(uint8_t angle) { servo_write(servo_third_pin,  angle); }
-void servo_three_a6(uint8_t angle) { servo_write(servo_fourth_pin, angle); }
+void servo_four_a6(uint8_t angle) { servo_write(servo_fourth_pin, angle); }
+
+
+void left_servo_single() {
+	servo_four_a6(63);
+}
+void left_servo_single_pull() {
+	servo_four_a6(58);
+}
+
+void left_servo_double() {
+	servo_four_a6(13);
+}

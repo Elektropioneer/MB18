@@ -94,16 +94,16 @@ uint8_t detection_bc() {
 /* Checking ALL FRONT sensors */
 uint8_t detection_front() {
     #ifdef BIG_ROBOT
-      if(detection_fl() == DETECTED ||
-         detection_fr() == DETECTED ||
-         detection_fc() == DETECTED) {
+      if(detection_fl() == CS_FL_DETECTED &&
+         detection_fr() == CS_FR_DETECTED &&
+         detection_fc() == CS_FC_DETECTED) {
            return DETECTED;
          }
 
       return NOT_DETECTED;
     #else
-      if(detection_fl() == DETECTED ||
-         detection_fr() == DETECTED) {
+      if(detection_fl() == CS_FL_DETECTED &&
+         detection_fr() == CS_FR_DETECTED) {
            return DETECTED;
          }
 
@@ -114,16 +114,16 @@ uint8_t detection_front() {
 /* Checking ALL BACK sensors */
 uint8_t detection_back() {
     #ifdef BIG_ROBOT
-      if(detection_bl() == DETECTED ||
-         detection_br() == DETECTED ||
-         detection_bc() == DETECTED) {
+      if(detection_bl() == CS_BL_DETECTED &&
+         detection_br() == CS_BR_DETECTED &&
+         detection_bc() == CS_BC_DETECTED) {
            return DETECTED;
          }
 
       return NOT_DETECTED;
     #else
-      if(detection_bl() == DETECTED ||
-         detection_br() == DETECTED) {
+      if(detection_bl() == CS_BL_DETECTED &&
+         detection_br() == CS_BR_DETECTED) {
            return DETECTED;
          }
 
