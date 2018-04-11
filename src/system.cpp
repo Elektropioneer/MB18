@@ -14,9 +14,9 @@ void recv_trig() {
 	read_pi();
 }
 
-void pi_com_setup() { 
+void pi_com_setup() {
 	Serial1.begin(115200); 
-	
+
 	pinMode(PB12, INPUT);
 	attachInterrupt(PB12, &recv_trig, RISING);
 
@@ -61,26 +61,26 @@ static void pi_write_array(char (*data)[8]) {
 }
 
 static void pi_read_array(char (*data)[8]) {
-	
+
 	for(size_t i=0; i<8; i++) {
 		(*data)[i] = Serial1.read();
 	}
 
-	
+
 }
 
 
 void read_pi() {
 	char recv[8];
-	
+
 	if(Serial1.available() >= 8) {
 		pi_read_array(&recv);
-	
+
 		switch(recv[0]) {
 			case 's':
-				if(recv[1] == 'e') 
+				if(recv[1] == 'e')
 					execute_via_pi = 1;
-				
+
 				pi_write_array(&recv);
 				break;
 			case 'p':
@@ -92,11 +92,11 @@ void read_pi() {
 					snd[0] = odometry_ping();
 					pi_write_array(&snd);
 				} else if(recv[1] == 'd') { // default info
-					
+
 					char snd[8];
-					
+
 					odometry_update_status();
-					
+
 					snd[0] = odometry_get_x() >> 8;
 					snd[1] = odometry_get_x() & 0xFF;
 					snd[2] = odometry_get_y() >> 8;
@@ -109,7 +109,7 @@ void read_pi() {
 					pi_write_array(&snd);
 
 				} else if(recv[1] == 'a') {
-				
+
 					odometry_end_match();
 
 					pi_write_array(&recv);
@@ -118,6 +118,6 @@ void read_pi() {
 
 		}
 
-	
+
 	}
 }

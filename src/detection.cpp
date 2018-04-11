@@ -33,8 +33,9 @@ void detection_setup() {
 
 /* Checking FRONT LEFT sensors */
 uint8_t detection_fl() {
-  if(detection_get_pin(CS_FL_PIN) == CS_FL_DETECTED) {
+  if(detection_get_pin(CS_FL_PIN) != CS_FL_DETECTED) {
     odometry_stop(NULL);
+    Serial1.print("Detected FL\n");
     return DETECTED;
   }
 
@@ -43,8 +44,9 @@ uint8_t detection_fl() {
 
 /* Checking FRONT RIGHT sensors */
 uint8_t detection_fr() {
-  if(detection_get_pin(CS_FR_PIN) == CS_FR_DETECTED) {
+  if(detection_get_pin(CS_FR_PIN) != CS_FR_DETECTED) {
     odometry_stop(NULL);
+    Serial1.print("Detected FR");
     return DETECTED;
   }
 
@@ -55,6 +57,7 @@ uint8_t detection_fr() {
 uint8_t detection_fc() {
   if(detection_get_pin(CS_FC_PIN) == CS_FC_DETECTED) {
     odometry_stop(NULL);
+    Serial1.print("Detected FC");
     return DETECTED;
   }
 
@@ -63,8 +66,9 @@ uint8_t detection_fc() {
 
 /* Checking BACK LEFT sensors */
 uint8_t detection_bl() {
-  if(detection_get_pin(CS_BL_PIN) == CS_BL_DETECTED) {
+  if(detection_get_pin(CS_BL_PIN) != CS_BL_DETECTED) {
     odometry_stop(NULL);
+    Serial1.print("Detected BL");
     return DETECTED;
   }
 
@@ -73,8 +77,9 @@ uint8_t detection_bl() {
 
 /* Checking BACK RIGHT sensors */
 uint8_t detection_br() {
-  if(detection_get_pin(CS_BR_PIN) == CS_BR_DETECTED) {
+  if(detection_get_pin(CS_BR_PIN) != CS_BR_DETECTED) {
     odometry_stop(NULL);
+    Serial1.print("Detected BR");
     return DETECTED;
   }
 
@@ -83,8 +88,9 @@ uint8_t detection_br() {
 
 /* Checking BACK CENTER sensors */
 uint8_t detection_bc() {
-  if(detection_get_pin(CS_BC_PIN) == CS_BC_DETECTED) {
+  if(detection_get_pin(CS_BC_PIN) != CS_BC_DETECTED) {
     odometry_stop(NULL);
+    Serial1.print("Detected BC");
     return DETECTED;
   }
 
@@ -94,16 +100,16 @@ uint8_t detection_bc() {
 /* Checking ALL FRONT sensors */
 uint8_t detection_front() {
     #ifdef BIG_ROBOT
-      if(detection_fl() == CS_FL_DETECTED &&
-         detection_fr() == CS_FR_DETECTED &&
-         detection_fc() == CS_FC_DETECTED) {
+      if(detection_fl() == DETECTED ||
+         detection_fr() == DETECTED ||
+       detection_fc()   == DETECTED) {
            return DETECTED;
          }
 
       return NOT_DETECTED;
     #else
-      if(detection_fl() == CS_FL_DETECTED &&
-         detection_fr() == CS_FR_DETECTED) {
+      if(detection_fl() == DETECTED ||
+         detection_fr() == DETECTED) {
            return DETECTED;
          }
 
@@ -114,16 +120,16 @@ uint8_t detection_front() {
 /* Checking ALL BACK sensors */
 uint8_t detection_back() {
     #ifdef BIG_ROBOT
-      if(detection_bl() == CS_BL_DETECTED &&
-         detection_br() == CS_BR_DETECTED &&
-         detection_bc() == CS_BC_DETECTED) {
+      if(detection_bl() == DETECTED ||
+         detection_br() == DETECTED ||
+         detection_bc() == DETECTED) {
            return DETECTED;
          }
 
       return NOT_DETECTED;
     #else
-      if(detection_bl() == CS_BL_DETECTED &&
-         detection_br() == CS_BR_DETECTED) {
+      if(detection_bl() == DETECTED ||
+         detection_br() == DETECTED) {
            return DETECTED;
          }
 

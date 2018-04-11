@@ -8,12 +8,21 @@
 #include "servo.h"
 #include "timer.h"
 
+uint8_t check() {
+	if(detection_back() == DETECTED) {
+		Serial1.print("Detecting...");
+		return 1;
+	} else {
+		Serial1.print("Not detecting...\n");
+		return 0;
+	}
+}
+
 void setup() {
-	
+
 	system_init();
 	pinMode(PC13, OUTPUT);
-	
-	wait_for_rpi();
+
 	/*
 	pump_setup();
 	//left_servo_single_pull()
@@ -50,13 +59,14 @@ void setup() {
 	delay(500);
 	//left_servo_single();
 */
-//odometry_set_speed(100);
-//odometry_rotate_for(360, NULL);
-	//odometry_end_match();
-
+	delay(2000);
+	odometry_set_speed(40);
+	odometry_move_forward(300, 40, check);
+	odometry_rotate_for(45, NULL);
 }
 
 
 void loop() {
-	odometry_end_match();
+	digitalWrite(PC13, !digitalRead(PC13));
+	delay(1000);
 }

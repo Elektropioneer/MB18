@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "timer.h"
 #include "system.h"
 #include "odometry.h"
@@ -24,12 +25,14 @@ static void sys_time_updater(void) {
   if((sys_time % 1) == 0) {
     // every 1ms
     	read_pi();
- 	
+
   }
 
   if((sys_time % 10) == 0) {
 	actuator_serial_update();
+
   }
+
   sys_time++;
 }
 
@@ -62,4 +65,3 @@ void timer_reset(void) {
 }
 
 long long timer_get_sys_time() { return sys_time; }
-
