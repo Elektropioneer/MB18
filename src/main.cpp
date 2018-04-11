@@ -7,7 +7,8 @@
 #include "cubes.h"
 #include "servo.h"
 #include "timer.h"
-
+#include "positions.h"
+/*
 uint8_t check() {
 	if(detection_back() == DETECTED) {
 		Serial1.print("Detecting...");
@@ -16,7 +17,7 @@ uint8_t check() {
 		Serial1.print("Not detecting...\n");
 		return 0;
 	}
-}
+}*/
 
 void setup() {
 
@@ -59,14 +60,14 @@ void setup() {
 	delay(500);
 	//left_servo_single();
 */
-	delay(2000);
-	odometry_set_speed(40);
-	odometry_move_forward(300, 40, check);
-	odometry_rotate_for(45, NULL);
+
+	/*odometry_goto(100, 0, 20, 1, NULL);
+
+	odometry_goto(0, 0, 20, 0, NULL);*/
+	greenside();
+
 }
 
 
 void loop() {
-	digitalWrite(PC13, !digitalRead(PC13));
-	delay(1000);
 }

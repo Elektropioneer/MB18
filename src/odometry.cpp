@@ -6,7 +6,6 @@
 #include "timer.h"
 #include "detection.h"
 
-unsigned char status;
 
 /*
  *  Structure to keep data of the position of the robot
@@ -226,7 +225,7 @@ uint8_t odometry_set_angle(uint16_t angle, uint8_t (*callback)()) {
  *  Description: sends the robot into a specific coordinate in a direction at a defined speed
  *  Parameter:   self explanatory
  */
-uint8_t odometry_goto(uint16_t x, uint16_t y, uint16_t angle, uint8_t speed, uint8_t direction, uint8_t (*callback)()) {
+uint8_t odometry_goto(uint16_t x, uint16_t y, uint8_t speed, uint8_t direction, uint8_t (*callback)()) {
 
 	// sending the command status
 	odometry_send_command_print(odometry_command_goto);
