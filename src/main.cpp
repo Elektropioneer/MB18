@@ -14,9 +14,9 @@ void setup() {
 	pinMode(PC13, OUTPUT);
 	
 	wait_for_rpi();
-	
+	/*
 	pump_setup();
-	//left_servo_single_pull();
+	//left_servo_single_pull()
 	delay(1000);
 	lift_center();
 	delay(500);
@@ -49,9 +49,14 @@ void setup() {
 	//left_servo_single_pull();
 	delay(500);
 	//left_servo_single();
+*/
+//odometry_set_speed(100);
+//odometry_rotate_for(360, NULL);
+	//odometry_end_match();
 
 }
 
-void loop() {
 
+void loop() {
+	odometry_end_match();
 }

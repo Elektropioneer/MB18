@@ -36,7 +36,7 @@ void actuator_serial_update() {
 }
 
 void actuator_setup() {
-	Serial2.begin(9600);
+	Serial2.begin(115200);
 	actuator_pckt.setStream(&Serial2);
 	actuator_pckt.setPacketHandler(&onPacketActuatorReceived);
 }
@@ -118,11 +118,18 @@ void actuator_stepper_rpm(uint8_t rpm, uint8_t module) {
 }
 
 
+static void lift_setup() {
+	uint8_t pckt[3] = {'a', 's', 'l'};
+	actuator_send_buffer(pckt);
+}
+
 // TASTERI
 void switch_setup() {
 	pinMode(switch_upper_pin, INPUT);
 	pinMode(switch_center_pin, INPUT);
 	pinMode(switch_bottom_pin, INPUT);
+
+	lift_setup();
 }
 
 uint8_t switch_upper() {
@@ -161,6 +168,7 @@ void ax_move_speed(uint8_t id, int angle, int speed) {
 	
 	actuator_send_buffer(pkt);
 }
+
 
 
 static void lift_up(uint8_t speed) {
