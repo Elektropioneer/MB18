@@ -238,16 +238,20 @@ uint8_t odometry_goto(uint16_t x, uint16_t y, uint8_t speed, uint8_t direction, 
  *	Function: 	 uint8_t odometry_stop(uint8_t (*callback)(uint32_t start_time))
  *  Description: stop the robot
  */
-uint8_t odometry_stop(uint8_t (*callback)()) {
+uint8_t odometry_stop(uint8_t type) {
 
 	/*
 	TODO: add multiple version (ABS or without) nad with parameters (speed dependent)
 	*/
 
 	// sending the command status
-	odometry_send_command_print(odometry_command_stop);
+	if(type == HARD_STOP) {
+		odometry_send_command_print(odometry_command_stop_hard);
+	} else if(type == SOFT_STOP) {
+		odometry_send_command_print(odometry_command_stop_soft);
+	}
 
-	return odometry_wait_until_done(callback);
+	return ODOMETRY_SUCCESS;
 }
 
 /*

@@ -24,6 +24,9 @@ enum odometry_states
 #define ODOMETRY_SUCCESS								1
 #define ODOMETRY_FAIL										0
 
+#define HARD_STOP												1
+#define SOFT_STOP												0
+
 #define odometry_command_set_position  'I'
 #define odometry_command_update_status 'P'
 #define odometry_command_set_speed		 'V'
@@ -31,7 +34,8 @@ enum odometry_states
 #define odometry_command_rotate_for    'T'
 #define odometry_command_set_angle     'A'
 #define odometry_command_goto					 'G'
-#define odometry_command_stop					 'S'
+#define odometry_command_stop_hard		 'S'
+#define odometry_command_stop_soft     's'
 #define odometry_command_end_match		 'K'
 #define odometry_command_ping 'H'
 
@@ -47,7 +51,7 @@ uint8_t odometry_move_forward(int16_t distance, uint8_t speed, uint8_t (*callbac
 uint8_t odometry_rotate_for(uint16_t angle, uint8_t (*callback)());
 uint8_t odometry_set_angle(uint16_t angle, uint8_t (*callback)());
 uint8_t odometry_goto(uint16_t x, uint16_t y, uint8_t speed, uint8_t direction, uint8_t (*callback)());
-uint8_t odometry_stop(uint8_t (*callback)());
+uint8_t odometry_stop(uint8_t type);
 void odometry_end_match(void);
 int16_t odometry_get_x(void);
 int16_t odometry_get_y(void);

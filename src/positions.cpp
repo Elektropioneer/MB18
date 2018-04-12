@@ -28,8 +28,7 @@ static uint8_t front() {
 const struct odometry_position green_starting  = {0, 0, 180};
 const struct odometry_position orange_starting = {0, 0, 0};
 const struct goto_fields green_tacticone[] = {
-	{{200, 0}, 50, FORWARD, front, wait},
-	{{200, 200}, 50, FORWARD, front, NULL}
+	{{500, 0}, 50, FORWARD, front, wait}
 };
 
 const struct goto_fields orange_tacticone[] = {
