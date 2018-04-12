@@ -63,7 +63,10 @@ void setup() {
 
 	/*odometry_goto(100, 0, 20, 1, NULL);
 
+
+
 	odometry_goto(0, 0, 20, 0, NULL);*/
+	delay(2000);
 	greenside();
 
 }

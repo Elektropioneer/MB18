@@ -15,10 +15,10 @@ void recv_trig() {
 }
 
 void pi_com_setup() {
-	Serial1.begin(115200); 
+	Serial1.begin(115200);
 
-	pinMode(PB12, INPUT);
-	attachInterrupt(PB12, &recv_trig, RISING);
+	//pinMode(PB12, INPUT);
+	//attachInterrupt(PB12, &recv_trig, RISING);
 
 }
 

@@ -54,43 +54,27 @@ void odometry_setup() {
 uint8_t detected_status;
 
 static uint8_t odometry_wait_until_done(uint8_t (*callback)()) {
+	delay(300);
 
-	for(int i=0; i<5; i++) {
-		odometry_update_status();
-		Serial1.write(position.state);
-		/*if(status == 'I') {
-			Serial1.print("Still idle");
-		} else if(status == 'M') {
-			Serial1.print("Moving...");
-		} else {
-			Serial1.print("Something else returned");
-			Serial1.write(status);
-		}*/
-		delay(100);
-	}
+	int counter = 0;
 
-	while(1) {
+	while(counter <= 2) {
 		odometry_update_status();
-		if(position.state == 'I') {
-			Serial1.print("Idle... exiting\n");
-			break;
-		} else if(position.state == 'M') {
-			Serial1.print("Moving...\n");
-		} else if(position.state == 'R') {
-			Serial1.print("Rotating...\n");
-		}
+		if(position.state == 'I')
+			counter++;
 
 		if(callback != NULL) {
-				if(callback() == 1) {
-					return ODOMETRY_FAIL;
-				}
+			if(callback() == 1) {
+				return ODOMETRY_FAIL;
 			}
+		}
 
-		delay(100);
-
+		delay(150);
 	}
 
-	Serial1.print("Free...");
+	Serial1.println("Idling...");
+
+	delay(200);
 	return ODOMETRY_SUCCESS;
 }
 
@@ -102,6 +86,7 @@ void odometry_set_position(int16_t x, int16_t y, int16_t angle) {
 
 	// sending the command status
 	odometry_send_command_print(odometry_command_set_position);
+
 
 	odometry_send_16bit(x);
 	odometry_send_16bit(y);
@@ -133,19 +118,26 @@ void odometry_update_status(void) {
 
   //Serial1.write(odometry_get_command()); //write because it converts it to ASCII...
   position.state = odometry_get_command();
-/*
+	Serial1.write(position.state);
+	Serial1.print(" ");
+
 //  Serial1.print((odometry_get_command() << 8) | odometry_get_command(), DEC);
   position.x = (odometry_get_command() << 8) | odometry_get_command();
+	Serial1.print(position.x);
+	Serial1.print(" ");
 
   //Serial1.print((odometry_get_command() << 8) | odometry_get_command(), DEC);
   position.y = (odometry_get_command() << 8) | odometry_get_command();
+	Serial1.print(position.y);
+	Serial1.println(" ");
 
   //Serial1.print((odometry_get_command() << 8) | odometry_get_command(), DEC);
   position.angle = (odometry_get_command() << 8) | odometry_get_command();
+	//Serial1.print(position.angle);
 
   //Serial1.print(odometry_get_command(), DEC);
   //position.current_speed = odometry_get_command();
-*/
+
 }
 
 /*
@@ -226,6 +218,8 @@ uint8_t odometry_set_angle(uint16_t angle, uint8_t (*callback)()) {
  *  Parameter:   self explanatory
  */
 uint8_t odometry_goto(uint16_t x, uint16_t y, uint8_t speed, uint8_t direction, uint8_t (*callback)()) {
+
+	odometry_set_speed(speed);
 
 	// sending the command status
 	odometry_send_command_print(odometry_command_goto);

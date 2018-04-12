@@ -13,16 +13,14 @@ struct goto_fields
 };
 
 uint8_t wait() {
-	delay(2000);
+	delay(200);
 	return 0;
 }
 
 static uint8_t front() {
 	if(detection_front() == DETECTED) {
-		Serial1.print("Detecting...");
 		return 1;
 	} else {
-		Serial1.print("Not detecting...\n");
 		return 0;
 	}
 }
@@ -30,8 +28,8 @@ static uint8_t front() {
 const struct odometry_position green_starting  = {0, 0, 180};
 const struct odometry_position orange_starting = {0, 0, 0};
 const struct goto_fields green_tacticone[] = {
-	{{-200, 0}, 20, BACKWARD, front, NULL},
-	{{100, 0}, 20, FORWARD, front, NULL}
+	{{200, 0}, 50, FORWARD, front, wait},
+	{{200, 200}, 50, FORWARD, front, NULL}
 };
 
 const struct goto_fields orange_tacticone[] = {
@@ -80,16 +78,25 @@ void greenside() {
 
 				active_state = TACTIC_ONE;
 				g_next = g_current;
+
+				odometry_stop(NULL);
+
+				delay(500);
+
 				break;
 
-		  case STUCK:
+		 /* case STUCK:
 				delay(1000);
 				active_state = TACTIC_ONE;
 				g_next = g_current;
-				break;
+				break;*/
 
 			case TACTIC_ONE:
-				for(g_current=g_next; g_current < (sizeof(green_tacticone)/sizeof(green_tacticone)[0]); g_current++) {
+				for(g_current=g_next; g_current < int((sizeof(green_tacticone)/sizeof(green_tacticone)[0])); g_current++) {
+
+
+					Serial1.println("Going to: ");
+					Serial1.print(g_current);
 
 					status = robot_movetoposition_green_tacticone(g_current);
 
@@ -102,10 +109,8 @@ void greenside() {
 						green_tacticone[g_current].callback_end();
 
 					if(g_current == (sizeof(green_tacticone)/sizeof(green_tacticone)[0]) - 1) {
-						odometry_stop(NULL);
 						odometry_end_match();
 						while(1);
-
 					}
 
 				}

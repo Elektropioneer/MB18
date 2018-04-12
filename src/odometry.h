@@ -18,8 +18,8 @@ enum odometry_states
 	ERROR = 'E'
 };
 
-#define FORWARD													1
-#define BACKWARD												0
+#define FORWARD													0
+#define BACKWARD												1
 
 #define ODOMETRY_SUCCESS								1
 #define ODOMETRY_FAIL										0
