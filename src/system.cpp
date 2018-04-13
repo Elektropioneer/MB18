@@ -25,11 +25,11 @@ void pi_com_setup() {
 
 void system_init() {
 
-  	timer_setup();
+  timer_setup();
 	delay(100);
 	pi_com_setup();
 	delay(100);
-  	odometry_setup();
+  odometry_setup();
 	delay(100);
 	detection_setup();
 	delay(100);

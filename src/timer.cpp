@@ -20,13 +20,16 @@ static void sys_time_updater(void) {
 
   if(sys_time >= TIMER_END) {
     // do something
+    odometry_stop(SOFT_STOP);
+    odometry_end_match();
+    while(1);
   }
 
-  if((sys_time % 1) == 0) {
+/*  if((sys_time % 1) == 0) {
     // every 1ms
     	read_pi();
 
-  }
+  }*/
 
   if((sys_time % 10) == 0) {
 	actuator_serial_update();

@@ -34,7 +34,6 @@ void detection_setup() {
 /* Checking FRONT LEFT sensors */
 uint8_t detection_fl() {
   if(detection_get_pin(CS_FL_PIN) != CS_FL_DETECTED) {
-    odometry_stop(HARD_STOP);
     Serial1.print("Detected FL\n");
     return DETECTED;
   }
@@ -45,7 +44,6 @@ uint8_t detection_fl() {
 /* Checking FRONT RIGHT sensors */
 uint8_t detection_fr() {
   if(detection_get_pin(CS_FR_PIN) != CS_FR_DETECTED) {
-    odometry_stop(HARD_STOP);
     Serial1.print("Detected FR");
     return DETECTED;
   }
@@ -56,7 +54,6 @@ uint8_t detection_fr() {
 /* Checking FRONT CENTER sensors */
 uint8_t detection_fc() {
   if(detection_get_pin(CS_FC_PIN) == CS_FC_DETECTED) {
-    odometry_stop(HARD_STOP);
     Serial1.print("Detected FC");
     return DETECTED;
   }
@@ -67,7 +64,6 @@ uint8_t detection_fc() {
 /* Checking BACK LEFT sensors */
 uint8_t detection_bl() {
   if(detection_get_pin(CS_BL_PIN) != CS_BL_DETECTED) {
-    odometry_stop(HARD_STOP);
     Serial1.print("Detected BL");
     return DETECTED;
   }
@@ -78,7 +74,6 @@ uint8_t detection_bl() {
 /* Checking BACK RIGHT sensors */
 uint8_t detection_br() {
   if(detection_get_pin(CS_BR_PIN) != CS_BR_DETECTED) {
-    odometry_stop(HARD_STOP);
     Serial1.print("Detected BR");
     return DETECTED;
   }
@@ -89,7 +84,6 @@ uint8_t detection_br() {
 /* Checking BACK CENTER sensors */
 uint8_t detection_bc() {
   if(detection_get_pin(CS_BC_PIN) != CS_BC_DETECTED) {
-    odometry_stop(HARD_STOP);
     Serial1.print("Detected BC");
     return DETECTED;
   }
@@ -101,8 +95,8 @@ uint8_t detection_bc() {
 uint8_t detection_front() {
     #ifdef BIG_ROBOT
       if(detection_fl() == DETECTED ||
-         detection_fr() == DETECTED ||
-       detection_fc()   == DETECTED) {
+         detection_fr() == DETECTED/* ||
+       detection_fc()   != DETECTED*/) {
            return DETECTED;
          }
 

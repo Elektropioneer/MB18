@@ -19,6 +19,16 @@ uint8_t wait() {
 
 static uint8_t front() {
 	if(detection_front() == DETECTED) {
+		odometry_stop(HARD_STOP);
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+static uint8_t back() {
+	if(detection_back() == DETECTED) {
+		odometry_stop(HARD_STOP);
 		return 1;
 	} else {
 		return 0;
@@ -28,7 +38,7 @@ static uint8_t front() {
 const struct odometry_position green_starting  = {0, 0, 180};
 const struct odometry_position orange_starting = {0, 0, 0};
 const struct goto_fields green_tacticone[] = {
-	{{500, 0}, 50, FORWARD, front, wait}
+	{{-500, 0}, 50, BACKWARD, back, wait}
 };
 
 const struct goto_fields orange_tacticone[] = {
@@ -56,7 +66,7 @@ static uint8_t robot_movetoposition_orange_tacticone(uint8_t num) {
 }
 
 uint8_t status, active_state;
-int g_current, g_next = 0;
+int g_current, g_next = 0, o_current, o_next = 0;
 
 void greenside() {
 
@@ -77,10 +87,6 @@ void greenside() {
 
 				active_state = TACTIC_ONE;
 				g_next = g_current;
-
-				odometry_stop(NULL);
-
-				delay(500);
 
 				break;
 
@@ -120,9 +126,56 @@ void greenside() {
 
 void orangeside() {
 
+	active_state = TACTIC_ONE;
+
 	odometry_set_position(orange_starting.x, orange_starting.y, orange_starting.angle);
 
-	for(int position_orange=0; position_orange<sizeof(sizeof(orange_tacticone)/sizeof(orange_tacticone)[0]);position_orange++) {
-		robot_movetoposition_orange_tacticone(position_orange);
+	delay(200);
+
+	while(1) {
+
+		switch(active_state) {
+			case COLLISION:
+				delay(200);
+
+				while(orange_tacticone[o_current].callback() == 1)
+					delay(10);
+
+				active_state = TACTIC_ONE;
+				o_next = o_current;
+
+				break;
+
+		 /* case STUCK:
+				delay(1000);
+				active_state = TACTIC_ONE;
+				g_next = g_current;
+				break;*/
+
+			case TACTIC_ONE:
+				for(o_current=o_next; o_current < int((sizeof(orange_tacticone)/sizeof(orange_tacticone)[0])); o_current++) {
+
+
+					Serial1.println("Going to: ");
+					Serial1.print(o_current);
+
+					status = robot_movetoposition_orange_tacticone(o_current);
+
+					if(status == ODOMETRY_FAIL) {
+						active_state = COLLISION;
+						break;
+					}
+
+					if(orange_tacticone[o_current].callback_end != NULL)
+						orange_tacticone[o_current].callback_end();
+
+					if(o_current == (sizeof(orange_tacticone)/sizeof(orange_tacticone)[0]) - 1) {
+						odometry_end_match();
+						while(1);
+					}
+
+				}
+				break;
+		}
 	}
 }
