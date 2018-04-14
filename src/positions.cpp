@@ -36,13 +36,13 @@ static uint8_t back() {
 }
 
 const struct odometry_position green_starting  = {0, 0, 180};
-const struct odometry_position orange_starting = {0, 0, 0};
+const struct odometry_position orange_starting = {0, 0, 180};
 const struct goto_fields green_tacticone[] = {
-	{{-500, 0}, 50, BACKWARD, back, wait}
+	{{300, 0}, 50, FORWARD, front, NULL}
 };
 
 const struct goto_fields orange_tacticone[] = {
-	{{100, 100}, 50, FORWARD, NULL, NULL}			// position 1
+	{{300, 0}, 50, FORWARD, front, NULL}			// position 1
 };
 
 // setup if collision so the return value
@@ -66,7 +66,8 @@ static uint8_t robot_movetoposition_orange_tacticone(uint8_t num) {
 }
 
 uint8_t status, active_state;
-int g_current, g_next = 0, o_current, o_next = 0;
+int g_current, g_next = 0;
+int o_current, o_next = 0;
 
 void greenside() {
 
@@ -80,6 +81,7 @@ void greenside() {
 
 		switch(active_state) {
 			case COLLISION:
+
 				delay(200);
 
 				while(green_tacticone[g_current].callback() == 1)
@@ -87,6 +89,8 @@ void greenside() {
 
 				active_state = TACTIC_ONE;
 				g_next = g_current;
+
+				delay(1000);
 
 				break;
 
@@ -143,6 +147,8 @@ void orangeside() {
 
 				active_state = TACTIC_ONE;
 				o_next = o_current;
+
+				delay(1000);
 
 				break;
 

@@ -66,16 +66,12 @@ void setup() {
 
 
 	odometry_goto(0, 0, 20, 0, NULL);*/
-	delay(2000);
+	//delay(2000);
 	//greenside();
-
-
+	//orangeside();
 }
 
 
 void loop() {
-	odometry_move_forward(200, 20, NULL);
-	delay(1000);
-	odometry_move_forward(-200, 20, NULL);
-	delay(1000);
+
 }

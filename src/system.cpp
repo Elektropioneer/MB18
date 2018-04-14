@@ -7,6 +7,7 @@
 #include "odometry.h"
 #include "detection.h"
 #include "actuator.h"
+#include "cubes.h"
 
 uint8_t execute_via_pi = 0;
 
@@ -37,6 +38,7 @@ void system_init() {
 	delay(100);
 	switch_setup();
 	delay(100);
+	setup_color_comb();
 	/*servo_setup();
 	delay(100);
 
@@ -71,7 +73,7 @@ static void pi_read_array(char (*data)[8]) {
 
 
 void read_pi() {
-	char recv[8];
+	/*char recv[8];
 
 	if(Serial1.available() >= 8) {
 		pi_read_array(&recv);
@@ -119,5 +121,5 @@ void read_pi() {
 		}
 
 
-	}
+	}*/
 }

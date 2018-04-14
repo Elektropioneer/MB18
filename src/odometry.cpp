@@ -51,8 +51,6 @@ void odometry_setup() {
   Serial.begin(57600);
 }
 
-uint8_t detected_status;
-
 static uint8_t odometry_wait_until_done(uint8_t (*callback)()) {
 	delay(300);
 
@@ -60,6 +58,7 @@ static uint8_t odometry_wait_until_done(uint8_t (*callback)()) {
 
 	while(counter <= 2) {
 		odometry_update_status();
+		
 		if(position.state == 'I')
 			counter++;
 
