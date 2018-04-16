@@ -32,5 +32,9 @@ void lift_upper();
 void lift_center();
 void lift_bottom();
 
+void stepper_2_setup();
+void stepper_2_one();
+void stepper_2_two();
+
 void pump_setup();
 void pump_switch();

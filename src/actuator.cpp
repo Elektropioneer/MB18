@@ -16,18 +16,18 @@ void onPacketActuatorReceived(const uint8_t* buffer, size_t size)
      		if(buffer[0] == 'r') {
 			relay_data = buffer[1];
 		} else if(buffer[1] == 'm') {
-		//do with motor_data	
-		} 
+		//do with motor_data
+		}
 
 		// AX
 		if(buffer[0] == 'x') {
 			switch(buffer[1]) {
 				case 'M':
-					ax_data = buffer[2];			
+					ax_data = buffer[2];
 					break;
-			}	
+			}
 		}
-			
+
 	}
 }
 
@@ -36,22 +36,22 @@ void actuator_serial_update() {
 }
 
 void actuator_setup() {
-	Serial2.begin(115200);
+	Serial2.begin(9600);
 	actuator_pckt.setStream(&Serial2);
 	actuator_pckt.setPacketHandler(&onPacketActuatorReceived);
 }
 
-void actuator_send_buffer(uint8_t* data) { 
+void actuator_send_buffer(uint8_t* data) {
 	actuator_pckt.send(data, sizeof(data)/sizeof(data)[0]);
 }
 
 void act_ax() {
-	
+
 	// 300 255
 	// x    y
 	// 300 * y = x * 255
 	// y = (x*255) / 300
-	
+
 	int angle = 150;
 	uint8_t dec;
 	dec = (uint8_t)((angle*255) / 300);
@@ -101,7 +101,7 @@ void actuator_motor_set(int16_t achieve) {
 
 
 void actuator_stepper_setup(uint8_t rpm, uint8_t module) {
-	uint8_t packet[5] = {'a','s', 's', rpm, module};
+	uint8_t packet[5] = {'a','s', 'D', rpm, module};
 	actuator_send_buffer(packet);
 }
 
@@ -165,7 +165,7 @@ void ax_move(uint8_t id, int angle) {
 
 void ax_move_speed(uint8_t id, int angle, int speed) {
 	uint8_t pkt[5] = {'x', 's', id, (uint8_t)(angle / 4.015), (uint8_t)(speed / 4.015)};
-	
+
 	actuator_send_buffer(pkt);
 }
 
@@ -186,8 +186,23 @@ static void lift_stop() {
 	actuator_send_buffer(pckt);
 }
 
+void stepper_2_setup() {
+	uint8_t pckt[3] = {'a', 's', 'D'};
+	actuator_send_buffer(pckt);
+}
+
+void stepper_2_one() {
+	uint8_t pckt[3] = {'a', 'c', 'f'};
+	actuator_send_buffer(pckt);
+}
+
+void stepper_2_two() {
+	uint8_t pckt[3] = {'a', 'c', 'F'};
+	actuator_send_buffer(pckt);
+}
+
 void lift_upper() {
-	
+
 
 
 	lift_up(100);
@@ -196,9 +211,9 @@ void lift_upper() {
 		if(switch_upper() == DETECTED) {
 			lift_stop();
 			break;
-		}	
-	}	
-	
+		}
+	}
+
 	//digitalWrite(PC13, HIGH);
 }
 

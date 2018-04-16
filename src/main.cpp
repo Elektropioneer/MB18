@@ -69,9 +69,15 @@ void setup() {
 	//delay(2000);
 	//greenside();
 	//orangeside();
+	delay(1000);
+	stepper_2_setup();
+	delay(500);
 }
 
 
 void loop() {
-
+	stepper_2_one();
+	delay(700);
+	stepper_2_two();
+	delay(700);
 }
