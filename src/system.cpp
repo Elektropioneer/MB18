@@ -8,12 +8,16 @@
 #include "detection.h"
 #include "actuator.h"
 #include "cubes.h"
+#include "display.h"
 
-uint8_t execute_via_pi = 0;
+uint8_t execute_via_pi = 0;				// status for execute via pi (not used anymore)
+uint8_t execute_via_jumper = 0;	  // status for execute via jumper
 
-void recv_trig() {
-	read_pi();
-}
+// recv trigure for the pi
+static void recv_trig() { read_pi(); }
+
+// when the jumper calls the interrupt it changes to execute via jumper
+void jumper_trig() { execute_via_jumper = 1; }
 
 void pi_com_setup() {
 	Serial1.begin(115200);
@@ -23,22 +27,35 @@ void pi_com_setup() {
 
 }
 
+// setup the jumper and the side pins
+static void setup_jump_side() {
+	pinMode(PIN_JUMPER, INPUT);
+	pinMode(PIN_SIDE, INPUT);
+
+	// attaching interrupt function
+	attachInterrupt(PIN_JUMPER, &jumper_trig, CHANGE);
+}
 
 void system_init() {
 
-  timer_setup();
+  timer_setup();				// timer
 	delay(100);
-	pi_com_setup();
+	pi_com_setup();				// pi com
 	delay(100);
-  odometry_setup();
+  odometry_setup();			// odometry
 	delay(100);
-	detection_setup();
+	detection_setup();		// detection
 	delay(100);
-	actuator_setup();
+	actuator_setup();			// actuator
 	delay(100);
-	switch_setup();
+	switch_setup();				// switch
 	delay(100);
-	setup_color_comb();
+	setup_color_comb();		// color combination
+	delay(100);
+	setup_jump_side();		// jumper and side
+	delay(100);
+	display_setup();			// display
+
 	/*servo_setup();
 	delay(100);
 
@@ -49,12 +66,20 @@ void system_init() {
 	pinMode(PC13, OUTPUT);
 }
 
-void wait_for_rpi() {
-	while(!execute_via_pi) {
-		delay(10);
+// while execute via pi is not set
+void wait_for_rpi() { while(!execute_via_pi) {delay(10); } }
+
+// while execute_via_jumper is not sets
+void wait_for_jumper() { while(!execute_via_jumper) {delay(5);} }
+
+// read the side switch and returns the side
+uint8_t get_side() {
+	if(digitalRead(PIN_SIDE)) {
+		return SIDE_GREEN;
+	} else {
+		return SIDE_ORANGE;
 	}
 }
-
 
 static void pi_write_array(char (*data)[8]) {
 	for(size_t i=0; i<8; i++) {

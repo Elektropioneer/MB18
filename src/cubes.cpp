@@ -209,7 +209,7 @@ static void arm_main_movement(uint8_t cube, uint8_t leave_position, uint8_t curr
 
 	if(current_num_in < 2) {
 		// we can stack one more
-		lift_center();	
+		lift_center();
 	} else {
 		// we can stack just one more
 		lift_upper();
