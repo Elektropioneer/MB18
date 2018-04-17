@@ -55,4 +55,4 @@ void cube_left_out();
 #define R_O 4
 
 void setup_color_comb();
-void arm_automatic();
+uint8_t arm_automatic();

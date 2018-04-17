@@ -2,6 +2,8 @@
 #include "positions.h"
 #include "odometry.h"
 #include "detection.h"
+#include "actuator.h"
+#include "cubes.h"
 
 struct goto_fields
 {
@@ -35,33 +37,73 @@ static uint8_t back() {
 	}
 }
 
-const struct odometry_position green_starting  = {0, 0, 180};
-const struct odometry_position orange_starting = {0, 0, 180};
-const struct goto_fields green_tacticone[] = {
+
+/******************************************************************
+														FIRST TABLE
+*******************************************************************/
+
+const struct odometry_position green_starting_first  = {0, 0, 180};
+const struct odometry_position orange_starting_first = {0, 0, 180};
+
+const struct goto_fields green_tacticone_first[] = {
 	{{300, 0}, 50, FORWARD, front, NULL}
 };
 
-const struct goto_fields orange_tacticone[] = {
-	{{300, 0}, 50, FORWARD, front, NULL}			// position 1
+const struct goto_fields orange_tacticone_first[] = {
+	{{300, 0}, 50, FORWARD, front, NULL}
 };
 
-// setup if collision so the return value
-static uint8_t robot_movetoposition_green_tacticone(uint8_t num) {
-	return odometry_goto(green_tacticone[num].position.x,
-								green_tacticone[num].position.y,
-								green_tacticone[num].speed,
-								green_tacticone[num].direction,
-								green_tacticone[num].callback);
+/*******************************************************************
+														SECOND TABLE
+*******************************************************************/
+
+const struct odometry_position green_starting_second  = {0, 0, 180};
+const struct odometry_position orange_starting_second = {0, 0, 180};
+
+const struct goto_fields green_tacticone_second[] = {
+	{{300, 0}, 50, FORWARD, front, NULL}
+};
+
+const struct goto_fields orange_tacticone_second[] = {
+	{{300, 0}, 50, FORWARD, front, NULL}
+};
+
+/*******************************************************************/
+
+static uint8_t robot_movetoposition_green_tacticone_first(uint8_t num) {
+	return odometry_goto(green_tacticone_first[num].position.x,
+								green_tacticone_first[num].position.y,
+								green_tacticone_first[num].speed,
+								green_tacticone_first[num].direction,
+								green_tacticone_first[num].callback);
+
+}
+
+static uint8_t robot_movetoposition_green_tacticone_second(uint8_t num) {
+	return odometry_goto(green_tacticone_second[num].position.x,
+								green_tacticone_second[num].position.y,
+								green_tacticone_second[num].speed,
+								green_tacticone_second[num].direction,
+								green_tacticone_second[num].callback);
 
 }
 
 
-static uint8_t robot_movetoposition_orange_tacticone(uint8_t num) {
-	return odometry_goto(orange_tacticone[num].position.x,
-								orange_tacticone[num].position.y,
-								orange_tacticone[num].speed,
-								orange_tacticone[num].direction,
-								orange_tacticone[num].callback);
+static uint8_t robot_movetoposition_orange_tacticone_first(uint8_t num) {
+	return odometry_goto(orange_tacticone_first[num].position.x,
+								orange_tacticone_first[num].position.y,
+								orange_tacticone_first[num].speed,
+								orange_tacticone_first[num].direction,
+								orange_tacticone_first[num].callback);
+
+}
+
+static uint8_t robot_movetoposition_orange_tacticone_second(uint8_t num) {
+	return odometry_goto(orange_tacticone_second[num].position.x,
+								orange_tacticone_second[num].position.y,
+								orange_tacticone_second[num].speed,
+								orange_tacticone_second[num].direction,
+								orange_tacticone_second[num].callback);
 
 }
 
@@ -69,11 +111,11 @@ uint8_t status, active_state;
 int g_current, g_next = 0;
 int o_current, o_next = 0;
 
-void greenside() {
+void greenside_firsttable() {
 
 	active_state = TACTIC_ONE;
 
-	odometry_set_position(green_starting.x, green_starting.y, green_starting.angle);
+	odometry_set_position(green_starting_first.x, green_starting_first.y, green_starting_first.angle);
 
 	delay(200);
 
@@ -84,7 +126,7 @@ void greenside() {
 
 				delay(200);
 
-				while(green_tacticone[g_current].callback() == 1)
+				while(green_tacticone_first[g_current].callback() == 1)
 					delay(10);
 
 				active_state = TACTIC_ONE;
@@ -101,23 +143,23 @@ void greenside() {
 				break;*/
 
 			case TACTIC_ONE:
-				for(g_current=g_next; g_current < int((sizeof(green_tacticone)/sizeof(green_tacticone)[0])); g_current++) {
+				for(g_current=g_next; g_current < int((sizeof(green_tacticone_first)/sizeof(green_tacticone_first)[0])); g_current++) {
 
 
-					Serial1.println("Going to: ");
-					Serial1.print(g_current);
+					/*Serial1.println("Going to: ");
+					Serial1.print(g_current);*/
 
-					status = robot_movetoposition_green_tacticone(g_current);
+					status = robot_movetoposition_green_tacticone_first(g_current);
 
 					if(status == ODOMETRY_FAIL) {
 						active_state = COLLISION;
 						break;
 					}
 
-					if(green_tacticone[g_current].callback_end != NULL)
-						green_tacticone[g_current].callback_end();
+					if(green_tacticone_first[g_current].callback_end != NULL)
+						green_tacticone_first[g_current].callback_end();
 
-					if(g_current == (sizeof(green_tacticone)/sizeof(green_tacticone)[0]) - 1) {
+					if(g_current == (sizeof(green_tacticone_first)/sizeof(green_tacticone_first)[0]) - 1) {
 						odometry_end_match();
 						while(1);
 					}
@@ -128,11 +170,11 @@ void greenside() {
 	}
 }
 
-void orangeside() {
+void orangeside_firsttable() {
 
 	active_state = TACTIC_ONE;
 
-	odometry_set_position(orange_starting.x, orange_starting.y, orange_starting.angle);
+	odometry_set_position(orange_starting_first.x, orange_starting_first.y, orange_starting_first.angle);
 
 	delay(200);
 
@@ -142,7 +184,7 @@ void orangeside() {
 			case COLLISION:
 				delay(200);
 
-				while(orange_tacticone[o_current].callback() == 1)
+				while(orange_tacticone_first[o_current].callback() == 1)
 					delay(10);
 
 				active_state = TACTIC_ONE;
@@ -159,23 +201,140 @@ void orangeside() {
 				break;*/
 
 			case TACTIC_ONE:
-				for(o_current=o_next; o_current < int((sizeof(orange_tacticone)/sizeof(orange_tacticone)[0])); o_current++) {
+				for(o_current=o_next; o_current < int((sizeof(orange_tacticone_first)/sizeof(orange_tacticone_first)[0])); o_current++) {
 
 
-					Serial1.println("Going to: ");
-					Serial1.print(o_current);
+					/*Serial1.println("Going to: ");
+					Serial1.print(o_current);*/
 
-					status = robot_movetoposition_orange_tacticone(o_current);
+					status = robot_movetoposition_orange_tacticone_first(o_current);
 
 					if(status == ODOMETRY_FAIL) {
 						active_state = COLLISION;
 						break;
 					}
 
-					if(orange_tacticone[o_current].callback_end != NULL)
-						orange_tacticone[o_current].callback_end();
+					if(orange_tacticone_first[o_current].callback_end != NULL)
+						orange_tacticone_first[o_current].callback_end();
 
-					if(o_current == (sizeof(orange_tacticone)/sizeof(orange_tacticone)[0]) - 1) {
+					if(o_current == (sizeof(orange_tacticone_first)/sizeof(orange_tacticone_first)[0]) - 1) {
+						odometry_end_match();
+						while(1);
+					}
+
+				}
+				break;
+		}
+	}
+}
+
+void greenside_secondtable() {
+
+	active_state = TACTIC_ONE;
+
+	odometry_set_position(green_starting_second.x, green_starting_second.y, green_starting_second.angle);
+
+	delay(200);
+
+	while(1) {
+
+		switch(active_state) {
+			case COLLISION:
+
+				delay(200);
+
+				while(green_tacticone_second[g_current].callback() == 1)
+					delay(10);
+
+				active_state = TACTIC_ONE;
+				g_next = g_current;
+
+				delay(1000);
+
+				break;
+
+		 /* case STUCK:
+				delay(1000);
+				active_state = TACTIC_ONE;
+				g_next = g_current;
+				break;*/
+
+			case TACTIC_ONE:
+				for(g_current=g_next; g_current < int((sizeof(green_tacticone_second)/sizeof(green_tacticone_second)[0])); g_current++) {
+
+
+					/*Serial1.println("Going to: ");
+					Serial1.print(g_current);*/
+
+					status = robot_movetoposition_green_tacticone_second(g_current);
+
+					if(status == ODOMETRY_FAIL) {
+						active_state = COLLISION;
+						break;
+					}
+
+					if(green_tacticone_second[g_current].callback_end != NULL)
+						green_tacticone_second[g_current].callback_end();
+
+					if(g_current == (sizeof(green_tacticone_second)/sizeof(green_tacticone_second)[0]) - 1) {
+						odometry_end_match();
+						while(1);
+					}
+
+				}
+				break;
+		}
+	}
+}
+
+void orangeside_secondtable() {
+
+	active_state = TACTIC_ONE;
+
+	odometry_set_position(orange_starting_second.x, orange_starting_second.y, orange_starting_second.angle);
+
+	delay(200);
+
+	while(1) {
+
+		switch(active_state) {
+			case COLLISION:
+				delay(200);
+
+				while(orange_tacticone_second[o_current].callback() == 1)
+					delay(10);
+
+				active_state = TACTIC_ONE;
+				o_next = o_current;
+
+				delay(1000);
+
+				break;
+
+		 /* case STUCK:
+				delay(1000);
+				active_state = TACTIC_ONE;
+				g_next = g_current;
+				break;*/
+
+			case TACTIC_ONE:
+				for(o_current=o_next; o_current < int((sizeof(orange_tacticone_second)/sizeof(orange_tacticone_second)[0])); o_current++) {
+
+
+					/*Serial1.println("Going to: ");
+					Serial1.print(o_current);*/
+
+					status = robot_movetoposition_orange_tacticone_second(o_current);
+
+					if(status == ODOMETRY_FAIL) {
+						active_state = COLLISION;
+						break;
+					}
+
+					if(orange_tacticone_second[o_current].callback_end != NULL)
+						orange_tacticone_second[o_current].callback_end();
+
+					if(o_current == (sizeof(orange_tacticone_second)/sizeof(orange_tacticone_second)[0]) - 1) {
 						odometry_end_match();
 						while(1);
 					}

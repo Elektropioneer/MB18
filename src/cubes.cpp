@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "actuator.h"
+#include "system.h"
 #include "cubes.h"
 
 int combination_current_number = 1;
@@ -101,7 +102,7 @@ void setup_color_comb() {
 }
 
 static uint8_t get_combination() {
-
+/*
 	uint8_t orange, black, green, yellow, blue;
 
 	orange = digitalRead(comb_pin_orange);
@@ -131,7 +132,8 @@ static uint8_t get_combination() {
 	//CI (tenth combination)
 	else if(orange == 1 && blue == 1 && yellow == 1) { return 9; }
 	// not valid combination
-	else { return 15; }
+	else { return 15; }*/
+	return (uint8_t)(pi_combination_read());
 }
 
 uint8_t comb_num = 1;									// current pile
@@ -203,7 +205,7 @@ static void arm_main_movement(uint8_t cube, uint8_t leave_position, uint8_t curr
 
 	pump_switch();
 	move_arm_by_color(cube);
-	delay(300);
+	delay(500);
 	lift_bottom();
 	delay(800);
 
@@ -221,7 +223,7 @@ static void arm_main_movement(uint8_t cube, uint8_t leave_position, uint8_t curr
 
 }
 
-void arm_automatic() {
+uint8_t arm_automatic() {
 
 	/* THEORY
 		1) get the combination (valid,valid,valid,notvalid,notvalid)
@@ -279,5 +281,5 @@ void arm_automatic() {
 	}
 
 	comb_num++; // incrementing to next pile
-
+	return 1;
 }

@@ -64,7 +64,6 @@ void act_ax() {
 }
 
 
-
 void actuator_relay_setup(uint8_t module) {
 	uint8_t packet[4] = {'a','s', 'r', module};
 	actuator_send_buffer(packet);
@@ -202,8 +201,6 @@ void stepper_2_two() {
 }
 
 void lift_upper() {
-
-
 
 	lift_up(100);
 

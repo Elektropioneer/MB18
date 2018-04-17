@@ -11,20 +11,38 @@
 #include "positions.h"
 #include "display.h"
 
+
 void setup() {
 
 	system_init();
 	pinMode(PC13, OUTPUT);
+	digitalWrite(PC13, LOW);
+
+	//wait_for_jumper();
 
 }
 
-void loop() {
-	/*if(get_side() == SIDE_ORANGE) { // CONNECTED TO 5V
-			digitalWrite(PC13, !digitalRead(PC13));
-			delay(100);
-	} else {												// CONNECTED TO GND
+int table_num = 1;
+//int table_num = 2;
 
-			digitalWrite(PC13, !digitalRead(PC13));
-			delay(1500);
-	}*/
+void loop() {
+/*Serial2.println(pi_combination_read());
+	delay(1000);
+
+
+*/
+
+	if(get_side() == SIDE_ORANGE) { // CONNECTED TO 5V
+			if(table_num == 1) {
+				while(1) { orangeside_firsttable(); }
+			} else if(table_num == 2) {
+				while(1) { orangeside_secondtable();}
+			}
+	} else {												// CONNECTED TO GND
+		if(table_num == 1) {
+			while(1) { greenside_firsttable();    }
+		} else if(table_num == 2) {
+			while(1) { greenside_secondtable();   }
+		}
+	}
 }

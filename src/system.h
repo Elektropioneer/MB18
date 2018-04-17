@@ -11,5 +11,6 @@ void wait_for_rpi();
 void read_pi();
 void wait_for_jumper();
 uint8_t get_side();
+char pi_combination_read();
 
 #define BIG_ROBOT
