@@ -31,7 +31,7 @@ void loop() {
 
 
 */
-
+/*
 	if(get_side() == SIDE_ORANGE) { // CONNECTED TO 5V
 			if(table_num == 1) {
 				while(1) { orangeside_firsttable(); }
@@ -44,5 +44,5 @@ void loop() {
 		} else if(table_num == 2) {
 			while(1) { greenside_secondtable();   }
 		}
-	}
+	}*/
 }

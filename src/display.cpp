@@ -242,9 +242,9 @@ static void printNumber(int value, int col) {
 
 
 static void display_number(int first, int second, int third) {
-  printNumber(first, 7);		  //Printing digit x, starting on col 7
-  printNumber(second, 10);		  //Printing digit y, starting on col 10
-  printNumber(third, 13);    		  //Printing digit z, starting on col 13
+  printNumber(first, 4);		  //Printing digit x, starting on col 7
+  printNumber(second, 7);		  //Printing digit y, starting on col 10
+  printNumber(third, 10);    		  //Printing digit z, starting on col 13
 }
 
 void display_setup() {
@@ -261,7 +261,7 @@ void display_setup() {
   lcd.createChar(7,bar7);
   lcd.createChar(8,bar8);
 
-  // Using segments to make letter E
+  /*// Using segments to make letter E
   lcd.setCursor(0, 0);
   lcd.write(2);
   lcd.write(3);
@@ -277,7 +277,7 @@ void display_setup() {
   lcd.write(3);
   lcd.write(1);
   lcd.setCursor(3,1);
-  lcd.write(2);
+  lcd.write(2);*/
 
   display_number(0,0,0);
 }
