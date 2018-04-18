@@ -33,7 +33,7 @@ void detection_setup() {
 
 /* Checking FRONT LEFT sensors */
 uint8_t detection_fl() {
-  if(detection_get_pin(CS_FL_PIN) != CS_FL_DETECTED) {
+  if(detection_get_pin(CS_FL_PIN) == CS_FL_DETECTED) {
     Serial1.print("Detected FL\n");
     return DETECTED;
   }
@@ -43,7 +43,7 @@ uint8_t detection_fl() {
 
 /* Checking FRONT RIGHT sensors */
 uint8_t detection_fr() {
-  if(detection_get_pin(CS_FR_PIN) != CS_FR_DETECTED) {
+  if(detection_get_pin(CS_FR_PIN) == CS_FR_DETECTED) {
     Serial1.print("Detected FR");
     return DETECTED;
   }
@@ -63,7 +63,7 @@ uint8_t detection_fc() {
 
 /* Checking BACK LEFT sensors */
 uint8_t detection_bl() {
-  if(detection_get_pin(CS_BL_PIN) != CS_BL_DETECTED) {
+  if(detection_get_pin(CS_BL_PIN) == CS_BL_DETECTED) {
     Serial1.print("Detected BL");
     return DETECTED;
   }
@@ -73,7 +73,7 @@ uint8_t detection_bl() {
 
 /* Checking BACK RIGHT sensors */
 uint8_t detection_br() {
-  if(detection_get_pin(CS_BR_PIN) != CS_BR_DETECTED) {
+  if(detection_get_pin(CS_BR_PIN) == CS_BR_DETECTED) {
     Serial1.print("Detected BR");
     return DETECTED;
   }

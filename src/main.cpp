@@ -15,9 +15,7 @@
 void setup() {
 
 	system_init();
-	pinMode(PC13, OUTPUT);
-	digitalWrite(PC13, LOW);
-
+	delay(500);
 	//wait_for_jumper();
 
 }
@@ -28,10 +26,8 @@ int table_num = 1;
 void loop() {
 /*Serial2.println(pi_combination_read());
 	delay(1000);
-
-
 */
-  
+/*
 	if(get_side() == SIDE_ORANGE) { // CONNECTED TO 5V
 			if(table_num == 1) {
 				while(1) { orangeside_firsttable(); }
@@ -45,7 +41,15 @@ void loop() {
 			while(1) { greenside_secondtable();   }
 		}
 	}
+delay(10);
+*/
 
-
-
+actuator_relay_switch(5);
+delay(1000);
+actuator_relay_switch(5);
+delay(1000);
+actuator_relay_switch(6);
+delay(1000);
+actuator_relay_switch(6);
+delay(1000);
 }

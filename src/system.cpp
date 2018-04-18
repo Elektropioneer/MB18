@@ -9,6 +9,7 @@
 #include "actuator.h"
 #include "display.h"
 
+
 uint8_t execute_via_pi = 0;				// status for execute via pi (not used anymore)
 uint8_t execute_via_jumper = 0;	  // status for execute via jumper
 
@@ -66,7 +67,8 @@ void system_init() {
   franken_setup();
 	delay(100);
 
-	pinMode(PC13, OUTPUT);
+	pinMode(LED_BUILTIN, OUTPUT);
+	digitalWrite(LED_BUILTIN, LOW);
 }
 
 // while execute via pi is not set

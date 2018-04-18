@@ -45,25 +45,6 @@ void actuator_send_buffer(uint8_t* data) {
 	actuator_pckt.send(data, sizeof(data)/sizeof(data)[0]);
 }
 
-void act_ax() {
-
-	// 300 255
-	// x    y
-	// 300 * y = x * 255
-	// y = (x*255) / 300
-
-	int angle = 150;
-	uint8_t dec;
-	dec = (uint8_t)((angle*255) / 300);
-
-
-
-	uint8_t pkt[4] ={'x','m', 4, 127};
-
-	actuator_send_buffer(pkt);
-}
-
-
 void actuator_relay_setup(uint8_t module) {
 	uint8_t packet[4] = {'a','s', 'r', module};
 	actuator_send_buffer(packet);
@@ -81,7 +62,41 @@ uint8_t actuator_relay_status(uint8_t module) {
 	return relay_data;
 }
 
+void franken_setup() {
+ uint8_t pckt[3] = {'a', 's', 'l'};
+ actuator_send_buffer(pckt);
+}
 
+void franken_up(uint8_t speed) {
+ uint8_t pckt[4] = {'a', 'c', 'u', speed};
+ actuator_send_buffer(pckt);
+}
+
+void franken_down(uint8_t speed) {
+ uint8_t pckt[4] = {'a', 'c', 'd', speed};
+ actuator_send_buffer(pckt);
+}
+
+void franken_stop() {
+ uint8_t pckt[3] = {'a', 'c', 'S'};
+ actuator_send_buffer(pckt);
+}
+
+void stepper_2_setup() {
+ uint8_t pckt[3] = {'a', 's', 'D'};
+ actuator_send_buffer(pckt);
+}
+
+void stepper_2_one() {
+ uint8_t pckt[3] = {'a', 'c', 'f'};
+ actuator_send_buffer(pckt);
+}
+
+void stepper_2_two() {
+ uint8_t pckt[3] = {'a', 'c', 'F'};
+ actuator_send_buffer(pckt);
+}
+/*
 void actuator_motor_setup(int16_t achieve) {
 	uint8_t uachieve = achieve >> 8;
 	uint8_t lachieve = achieve & 0xFF;
@@ -115,12 +130,7 @@ void actuator_stepper_rpm(uint8_t rpm, uint8_t module) {
 	uint8_t packet[6] = {'a','c', 's', 'r', rpm, module};
 	actuator_send_buffer(packet);
 }
-
-
- void franken_setup() {
-	uint8_t pckt[3] = {'a', 's', 'l'};
-	actuator_send_buffer(pckt);
-}
+*/
 
 // TASTERI
 /*
@@ -172,35 +182,7 @@ void ax_move_speed(uint8_t id, int angle, int speed) {
 
 
 */
- void franken_up(uint8_t speed) {
-	uint8_t pckt[4] = {'a', 'c', 'u', speed};
-	actuator_send_buffer(pckt);
-}
 
- void franken_down(uint8_t speed) {
-	uint8_t pckt[4] = {'a', 'c', 'd', speed};
-	actuator_send_buffer(pckt);
-}
-
- void franken_stop() {
-	uint8_t pckt[3] = {'a', 'c', 'S'};
-	actuator_send_buffer(pckt);
-}
-
-void stepper_2_setup() {
-	uint8_t pckt[3] = {'a', 's', 'D'};
-	actuator_send_buffer(pckt);
-}
-
-void stepper_2_one() {
-	uint8_t pckt[3] = {'a', 'c', 'f'};
-	actuator_send_buffer(pckt);
-}
-
-void stepper_2_two() {
-	uint8_t pckt[3] = {'a', 'c', 'F'};
-	actuator_send_buffer(pckt);
-}
 /*
 void lift_upper() {
 
@@ -249,5 +231,24 @@ void pump_setup() {
 }
 void pump_switch() {
 	actuator_relay_switch(6);
+}
+*/
+/*
+void act_ax() {
+
+	// 300 255
+	// x    y
+	// 300 * y = x * 255
+	// y = (x*255) / 300
+
+	int angle = 150;
+	uint8_t dec;
+	dec = (uint8_t)((angle*255) / 300);
+
+
+
+	uint8_t pkt[4] ={'x','m', 4, 127};
+
+	actuator_send_buffer(pkt);
 }
 */
