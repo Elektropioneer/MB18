@@ -7,7 +7,6 @@
 #include "odometry.h"
 #include "detection.h"
 #include "actuator.h"
-#include "cubes.h"
 #include "display.h"
 
 uint8_t execute_via_pi = 0;				// status for execute via pi (not used anymore)
@@ -60,14 +59,12 @@ void system_init() {
 	delay(100);
 	actuator_setup();			// actuator
 	delay(100);
-	switch_setup();				// switch
-	delay(100);
-	setup_color_comb();		// color combination
-	delay(100);
 	setup_jump_side();		// jumper and side
 	delay(100);
-	display_setup();			// display
-
+	display_setup();
+	delay(100);         // display
+  franken_setup();
+	delay(100);
 
 	pinMode(PC13, OUTPUT);
 }

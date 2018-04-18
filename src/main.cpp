@@ -5,7 +5,6 @@
 #include "odometry.h"
 #include "detection.h"
 #include "actuator.h"
-#include "cubes.h"
 #include "servo.h"
 #include "timer.h"
 #include "positions.h"
@@ -32,7 +31,7 @@ void loop() {
 
 
 */
-
+  
 	if(get_side() == SIDE_ORANGE) { // CONNECTED TO 5V
 			if(table_num == 1) {
 				while(1) { orangeside_firsttable(); }
@@ -46,4 +45,7 @@ void loop() {
 			while(1) { greenside_secondtable();   }
 		}
 	}
+
+
+
 }

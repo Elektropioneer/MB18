@@ -28,9 +28,10 @@ uint8_t switch_bottom();
 void ax_move(uint8_t id, int angle);
 void ax_move_speed(uint8_t id, int angle, int speed);
 
-void lift_upper();
-void lift_center();
-void lift_bottom();
+void franken_setup();
+void franken_up(uint8_t speed);
+void franken_stop();
+void franken_down(uint8_t speed);
 
 void stepper_2_setup();
 void stepper_2_one();

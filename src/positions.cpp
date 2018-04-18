@@ -3,7 +3,6 @@
 #include "odometry.h"
 #include "detection.h"
 #include "actuator.h"
-#include "cubes.h"
 
 struct goto_fields
 {

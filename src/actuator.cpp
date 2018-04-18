@@ -117,12 +117,13 @@ void actuator_stepper_rpm(uint8_t rpm, uint8_t module) {
 }
 
 
-static void lift_setup() {
+ void franken_setup() {
 	uint8_t pckt[3] = {'a', 's', 'l'};
 	actuator_send_buffer(pckt);
 }
 
 // TASTERI
+/*
 void switch_setup() {
 	pinMode(switch_upper_pin, INPUT);
 	pinMode(switch_center_pin, INPUT);
@@ -130,7 +131,8 @@ void switch_setup() {
 
 	lift_setup();
 }
-
+*/
+/*
 uint8_t switch_upper() {
 	if(digitalRead(switch_upper_pin)) {
 		return NOT_DETECTED;
@@ -169,18 +171,18 @@ void ax_move_speed(uint8_t id, int angle, int speed) {
 }
 
 
-
-static void lift_up(uint8_t speed) {
+*/
+ void franken_up(uint8_t speed) {
 	uint8_t pckt[4] = {'a', 'c', 'u', speed};
 	actuator_send_buffer(pckt);
 }
 
-static void lift_down(uint8_t speed) {
+ void franken_down(uint8_t speed) {
 	uint8_t pckt[4] = {'a', 'c', 'd', speed};
 	actuator_send_buffer(pckt);
 }
 
-static void lift_stop() {
+ void franken_stop() {
 	uint8_t pckt[3] = {'a', 'c', 'S'};
 	actuator_send_buffer(pckt);
 }
@@ -199,7 +201,7 @@ void stepper_2_two() {
 	uint8_t pckt[3] = {'a', 'c', 'F'};
 	actuator_send_buffer(pckt);
 }
-
+/*
 void lift_upper() {
 
 	lift_up(100);
@@ -248,3 +250,4 @@ void pump_setup() {
 void pump_switch() {
 	actuator_relay_switch(6);
 }
+*/
